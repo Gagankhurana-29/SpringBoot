@@ -1,1 +1,1 @@
-Only basic code of Beans and Confifuration in this branch.
+Only basic code of Beans and Confgfuration in this branch.
