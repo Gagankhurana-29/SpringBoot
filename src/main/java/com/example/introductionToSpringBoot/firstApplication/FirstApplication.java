@@ -9,9 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class FirstApplication implements CommandLineRunner {
 
-	@Autowired
-	Apple apple;
-
 	public static void main(String[] args) {
 		SpringApplication.run(FirstApplication.class, args);
 	}
@@ -19,6 +16,5 @@ public class FirstApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		apple.eatApple();
 	}
 }
