@@ -7,6 +7,9 @@ public class DepartmentDTO {
     private int people;
     private long budget;
 
+    public DepartmentDTO() {
+    }
+
     public DepartmentDTO(String name, int id, int people, long budget) {
         this.name = name;
         this.id = id;

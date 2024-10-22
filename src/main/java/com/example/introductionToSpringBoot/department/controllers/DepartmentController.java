@@ -3,6 +3,7 @@ package com.example.introductionToSpringBoot.department.controllers;
 import com.example.introductionToSpringBoot.department.DTO.DepartmentDTO;
 import com.example.introductionToSpringBoot.department.Entity.DepartmentEntity;
 import com.example.introductionToSpringBoot.department.Repositories.DepartmentRepository;
+import com.example.introductionToSpringBoot.department.Service.DepartmentService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,17 +11,17 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/departments")
 class DepartmentController {
-    
-    private final DepartmentRepository departmentRepository;
 
-    DepartmentController(DepartmentRepository departmentRepository) {
-        this.departmentRepository = departmentRepository;
+    private final DepartmentService departmentService;
+
+    DepartmentController(DepartmentService departmentService) {
+        this.departmentService = departmentService;
     }
 
     @GetMapping(path = "/getAllDepartments/")
-    public List<DepartmentEntity> getDepartments(){
+    public List<DepartmentDTO> getDepartments(){
         System.out.println("Getting the departments");
-        return departmentRepository.findAll();
+        return departmentService.findAll();
     }
 
     @GetMapping(path = "/{departmentID}")
@@ -29,9 +30,9 @@ class DepartmentController {
     }
 
     @PostMapping(path = "/addDepartments/")
-    public DepartmentEntity addDepartment(@RequestBody DepartmentEntity departmentEntity){
+    public DepartmentDTO addDepartment(@RequestBody DepartmentDTO departmentDTO){
         //departmentEntity.setName("IT Department");
-        return departmentRepository.save(departmentEntity);
+        return departmentService.save(departmentDTO);
     }
 
 }
