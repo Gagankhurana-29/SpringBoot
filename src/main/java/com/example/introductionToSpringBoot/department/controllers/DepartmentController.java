@@ -4,6 +4,7 @@ import com.example.introductionToSpringBoot.department.DTO.DepartmentDTO;
 import com.example.introductionToSpringBoot.department.Entity.DepartmentEntity;
 import com.example.introductionToSpringBoot.department.Repositories.DepartmentRepository;
 import com.example.introductionToSpringBoot.department.Service.DepartmentService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +35,7 @@ class DepartmentController {
     }
 
     @PostMapping(path = "/addDepartments/")
-    public ResponseEntity<DepartmentDTO> addDepartment(@RequestBody DepartmentDTO departmentDTO){
+    public ResponseEntity<DepartmentDTO> addDepartment(@RequestBody @Valid DepartmentDTO departmentDTO){
         //departmentEntity.setName("IT Department");
         DepartmentDTO savedDepartment =  departmentService.save(departmentDTO);
         return new ResponseEntity<>(savedDepartment, HttpStatus.CREATED);

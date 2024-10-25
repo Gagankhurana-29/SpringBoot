@@ -1,10 +1,20 @@
 package com.example.introductionToSpringBoot.department.DTO;
 
+import com.example.introductionToSpringBoot.department.annotations.DepartmentNameValidation;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+
 public class DepartmentDTO {
 
+    @DepartmentNameValidation(message = "Department shoud be IT/Accounts")
     private String name;
+
     private int id;
+
+    @Min(value = 1, message = "Atleast one person should be there")
     private int people;
+
+    @Min(value = 20000, message = "Minimum budget should be 20k")
     private long budget;
 
     public DepartmentDTO() {
