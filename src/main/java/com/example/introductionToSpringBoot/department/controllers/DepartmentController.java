@@ -2,6 +2,7 @@ package com.example.introductionToSpringBoot.department.controllers;
 
 import com.example.introductionToSpringBoot.department.DTO.DepartmentDTO;
 import com.example.introductionToSpringBoot.department.Entity.DepartmentEntity;
+import com.example.introductionToSpringBoot.department.Exception.ResourceNotFound;
 import com.example.introductionToSpringBoot.department.Repositories.DepartmentRepository;
 import com.example.introductionToSpringBoot.department.Service.DepartmentService;
 import jakarta.validation.Valid;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping(path = "/departments")
@@ -34,6 +36,8 @@ class DepartmentController {
         return "Department fetched with id " + id;
     }
 
+
+
     @PostMapping(path = "/addDepartments/")
     public ResponseEntity<DepartmentDTO> addDepartment(@RequestBody @Valid DepartmentDTO departmentDTO){
         //departmentEntity.setName("IT Department");
@@ -45,7 +49,7 @@ class DepartmentController {
     public ResponseEntity<DepartmentDTO> updateDepartment(@RequestBody Map<String, Object> updates,
                                           @PathVariable int departmentID ){
         DepartmentDTO updatedDepartment = departmentService.updateDepartment(departmentID,updates);
-        if(updatedDepartment == null) return ResponseEntity.notFound().build();
+        if(updatedDepartment == null) throw new ResourceNotFound();
         return ResponseEntity.ok(updatedDepartment);
     }
 
