@@ -2,12 +2,14 @@ package com.example.introductionToSpringBoot.department.Service;
 
 import com.example.introductionToSpringBoot.department.DTO.DepartmentDTO;
 import com.example.introductionToSpringBoot.department.Entity.DepartmentEntity;
+import com.example.introductionToSpringBoot.department.Exception.ResourceNotFound;
 import com.example.introductionToSpringBoot.department.Repositories.DepartmentRepository;
 import org.aspectj.util.Reflection;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
+import java.lang.module.ResolutionException;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
@@ -54,7 +56,7 @@ public class DepartmentService {
     }
 
     public boolean deleteDepartment(int departmentId) {
-        if(!departmentExist(departmentId)) return false;
+        if(!departmentExist(departmentId)) throw new ResourceNotFound();
         departmentRepository.deleteById(departmentId);
         return true;
     }
