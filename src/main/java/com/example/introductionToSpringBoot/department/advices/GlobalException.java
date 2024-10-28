@@ -8,21 +8,24 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class GlobalException {
 
     @ExceptionHandler(ResourceNotFound.class)
-    public ResponseEntity<ApiError> resourceNotFound(ResourceNotFound exception){
+    public ResponseEntity<ApiResponse<?>> resourceNotFound(ResourceNotFound exception){
    //     ApiError error = ApiError.builder().
         ApiError error = new ApiError(HttpStatus.NOT_FOUND, exception.getMessage());
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        return buildResponseEntity(error);
+    }
+
+    public ResponseEntity<ApiResponse<?>> buildResponseEntity(ApiError error){
+        return new ResponseEntity<>(new  ApiResponse<>(error), error.getStatus() );
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ApiError> methodArgumentNotValid(MethodArgumentNotValidException exception){
+    public ResponseEntity<ApiResponse<?>> methodArgumentNotValid(MethodArgumentNotValidException exception){
 
         List<String> subErrors = exception.getBindingResult()
                 .getAllErrors().
@@ -32,7 +35,7 @@ public class GlobalException {
 
         ApiError error = new ApiError(HttpStatus.BAD_REQUEST, "Invalid Input",subErrors);
 
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        return buildResponseEntity(error);
     }
 
 }
